@@ -1,5 +1,4 @@
-# Tarefas_EstatisticaEducacional
-RepositÃ³rio para os scripts de tarefas da disciplina EstatÃ­stica Educacional (2019.2)
+# Tarefas de Estatística Educacional
 
 
-Link1
+Repositório para os scripts das tarefas da disciplina Estatística Educacional (2019.2)
