@@ -2,7 +2,7 @@
 title: "Resolução - Tarefa0"
 author: "Rafael Barbosa"
 date: "3 de abril de 2019"
-output: html_document
+output: md_document
 ---
 
 
@@ -35,6 +35,7 @@ if(!require(rmarkdown)) {
   install.packages("rmarkdown", dependencies = T); 
   require(rmarkdown)
 }
+
 
 ```
 

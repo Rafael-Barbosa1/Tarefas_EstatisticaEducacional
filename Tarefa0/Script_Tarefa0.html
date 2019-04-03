@@ -202,14 +202,24 @@ $(document).ready(function () {
   require(tidyverse)
 }</code></pre>
 <pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## -- Attaching packages ------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ------------------------------ tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.1.0     v purrr   0.3.0
 ## v tibble  2.0.1     v dplyr   0.7.8
 ## v tidyr   0.8.2     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.3.0</code></pre>
-<pre><code>## -- Conflicts ---------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts --------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>if(!require(knitr)) {
+  install.packages(&quot;knitr&quot;, dependencies = T); 
+  require(knitr)
+}</code></pre>
+<pre><code>## Loading required package: knitr</code></pre>
+<pre class="r"><code>if(!require(rmarkdown)) {
+  install.packages(&quot;rmarkdown&quot;, dependencies = T); 
+  require(rmarkdown)
+}</code></pre>
+<pre><code>## Loading required package: rmarkdown</code></pre>
 </div>
 <div id="definindo-o-set.seed-semente" class="section level2">
 <h2>Definindo o set.seed (semente)</h2>
