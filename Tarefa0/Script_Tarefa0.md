@@ -1,89 +1,64 @@
----
-title: "ResoluÁ„o - Tarefa0"
-author: "Rafael Barbosa"
-date: "3 de abril de 2019"
-output: 
-  html_document:
-    keep_md: true
----
+Limpando o banco
+----------------
 
-
-## Limpando o banco
-
-
-```r
+``` r
 rm(list = ls())
 ```
 
+Carregando o pacote tidyverse
+-----------------------------
 
-## Carregando o pacote tidyverse
-
-
-```r
+``` r
 if(!require(tidyverse)) {
   install.packages("tidyverse", dependencies = T); 
   require(tidyverse)
 }
 ```
 
-```
-## Loading required package: tidyverse
-```
+    ## Loading required package: tidyverse
 
-```
-## -- Attaching packages ------------------------------- tidyverse 1.2.1 --
-```
+    ## -- Attaching packages ------------------------------- tidyverse 1.2.1 --
 
-```
-## v ggplot2 3.1.0     v purrr   0.3.0
-## v tibble  2.0.1     v dplyr   0.7.8
-## v tidyr   0.8.2     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.3.0
-```
+    ## v ggplot2 3.1.0     v purrr   0.3.0
+    ## v tibble  2.0.1     v dplyr   0.7.8
+    ## v tidyr   0.8.2     v stringr 1.4.0
+    ## v readr   1.3.1     v forcats 0.3.0
 
-```
-## -- Conflicts ---------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
+    ## -- Conflicts ---------------------------------- tidyverse_conflicts() --
+    ## x dplyr::filter() masks stats::filter()
+    ## x dplyr::lag()    masks stats::lag()
 
-```r
+``` r
 if(!require(knitr)) {
   install.packages("knitr", dependencies = T); 
   require(knitr)
 }
 ```
 
-```
-## Loading required package: knitr
-```
+    ## Loading required package: knitr
 
-```r
+``` r
 if(!require(rmarkdown)) {
   install.packages("rmarkdown", dependencies = T); 
   require(rmarkdown)
 }
 ```
 
-```
-## Loading required package: rmarkdown
-```
+    ## Loading required package: rmarkdown
 
+Definindo o set.seed (semente)
+------------------------------
 
-## Definindo o set.seed (semente)
-
-
-```r
+``` r
 set.seed(12345)
 ```
 
+Quest√£o 1
+---------
 
-## Quest„o 1
+### Quest√£o 1.1
 
-### Quest„o 1.1
-
-
-```r
+``` r
 funcaoq11 <- function(x){
   
   valor <- x^2 - 5*x + 6
@@ -101,14 +76,11 @@ runif(n = 100, min = 0, max = 4) %>%
   theme_bw()
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq11-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq11-1.png)
 
+### Quest√£o 1.2
 
-
-### Quest„o 1.2
-
-
-```r
+``` r
 rnorm(n = 100) %>% 
   as_tibble %>%
   ggplot(aes(x = value)) +
@@ -124,14 +96,11 @@ rnorm(n = 100) %>%
   labs(x = "Valor" , y = "Densidade")
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq12-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq12-1.png)
 
+### Quest√£o 1.3 :: D = 1
 
-
-### Quest„o 1.3 :: D = 1
-
-
-```r
+``` r
 funcaoq13 <- function(x, a, b, D){
   
   valor1 <- 1/(1 + exp(-D * a * (x - b)))
@@ -150,14 +119,11 @@ runif(n = 100, min = 1, max = 20) %>%
   theme_bw()
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq131-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq131-1.png)
 
+### Quest√£o 1.3 :: D = 1.7
 
-
-### Quest„o 1.3 :: D = 1.7
-
-
-```r
+``` r
 runif(n = 100, min = 1, max = 20) %>%
   map_dbl(~ funcaoq13(x = ., a = 1.5, b = 1, D = 1.7)) %>%
   as_tibble %>%
@@ -167,14 +133,11 @@ runif(n = 100, min = 1, max = 20) %>%
   theme_bw()
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq132-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq132-1.png)
 
+### Quest√£o 1.4
 
-
-### Quest„o 1.4
-
-
-```r
+``` r
 rnorm(n = 100) %>% 
   as_tibble %>%
   ggplot(aes(x = value)) +
@@ -194,7 +157,7 @@ rnorm(n = 100) %>%
                 alpha = 0.9) + 
   scale_colour_manual(name = "", values = c("darkred", "darkblue"), 
                       breaks = c("bla", "blabla"), 
-                      labels = c("FunÁ„o 1.3 \n (D = 1,7)", "Densidade \n da N(0,1)")) + 
+                      labels = c("Fun√ß√£o 1.3 \n (D = 1,7)", "Densidade \n da N(0,1)")) + 
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
@@ -203,13 +166,11 @@ rnorm(n = 100) %>%
   labs(x = "Valor", y = "Densidade")
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq14-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq14-1.png)
 
+### Quest√£o 1.5
 
-### Quest„o 1.5
-
-
-```r
+``` r
 funcaoq15 <- function(x, a, b, c, D){
   
   valor3 <- (c + (1 - c))/(1 + exp(-D * a * (x - b)))
@@ -228,21 +189,16 @@ runif(n = 100, min = 0, max = 10) %>%
   theme_bw()
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq15-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq15-1.png)
 
+### Quest√£o 1.6 (Em progresso)
 
+Quest√£o 2
+---------
 
-### Quest„o 1.6 (Em progresso)
+### Quest√£o 2.1
 
-
-
-## Quest„o 2
-
-
-### Quest„o 2.1
-
-
-```r
+``` r
 runif(n = 1000, min = 0, max = 1) %>%
   as_tibble() %>% 
   ggplot(aes(x = value)) +
@@ -253,58 +209,46 @@ runif(n = 1000, min = 0, max = 1) %>%
   labs(x = "Valor", y = "Densidade")
 ```
 
-![](Script_Tarefa0_files/figure-html/funcaoq21-1.png)<!-- -->
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq21-1.png)
 
+### Quest√£o 2.2
 
-### Quest„o 2.2
-
-
-```r
+``` r
 rbinom(n = 1000, size = 1, prob = 0.3) %>%
   as_tibble %>%
   summarise(media = mean(value), 
             variancia = var(value))
 ```
 
-```
-## # A tibble: 1 x 2
-##   media variancia
-##   <dbl>     <dbl>
-## 1 0.289     0.206
-```
+    ## # A tibble: 1 x 2
+    ##   media variancia
+    ##   <dbl>     <dbl>
+    ## 1 0.289     0.206
 
+### Quest√£o 2.3
 
-### Quest„o 2.3
-
-
-```r
+``` r
 rbinom(n = 10, size = 1, prob = 0.5) %>%
   as_tibble %>%
   summarise(media = mean(value), 
             variancia = var(value))
 ```
 
-```
-## # A tibble: 1 x 2
-##   media variancia
-##   <dbl>     <dbl>
-## 1   0.7     0.233
-```
+    ## # A tibble: 1 x 2
+    ##   media variancia
+    ##   <dbl>     <dbl>
+    ## 1   0.7     0.233
 
+### Quest√£o 2.4
 
-### Quest„o 2.4
-
-
-```r
+``` r
 rnorm(n = 1000) %>%
   as_tibble %>%
   summarise(media = mean(value), 
             variancia = var(value))
 ```
 
-```
-## # A tibble: 1 x 2
-##     media variancia
-##     <dbl>     <dbl>
-## 1 -0.0313     0.981
-```
+    ## # A tibble: 1 x 2
+    ##     media variancia
+    ##     <dbl>     <dbl>
+    ## 1 -0.0313     0.981
