@@ -5,26 +5,72 @@ date: "3 de abril de 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+## Limpando o banco
+
+```{r, limpa_banco, echo = T}
+
+rm(list = ls())
+
 ```
 
 
+## Carregando o pacote tidyverse
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r, pacotes, echo = T}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+if(!require(tidyverse)) {
+  install.packages("tidyverse", dependencies = T); 
+  require(tidyverse)
+}
 
-```{r cars}
-summary(cars)
+
+if(!require(knitr)) {
+  install.packages("knitr", dependencies = T); 
+  require(knitr)
+}
+
+
+if(!require(rmarkdown)) {
+  install.packages("rmarkdown", dependencies = T); 
+  require(rmarkdown)
+}
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+## Definindo o set.seed (semente)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r, seed, echo = T}
+
+set.seed(12345)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Questão 1
+
+### Questão 1.1
+
+```{r, funcaoq11, echo = TRUE, warning = FALSE}
+
+funcaoq11 <- function(x){
+  
+  valor <- x^2 - 5*x + 6
+  
+  return(valor)
+  
+}
+
+
+runif(n = 100, min = 0, max = 4) %>%
+  as_tibble() %>%
+  mutate(y = seq_along(map(.x = value, .f = funcaoq11))) %>% 
+  ggplot() +
+  geom_line(aes(x = y, y = value)) +
+  theme_bw()
+
+
+```
+
+
