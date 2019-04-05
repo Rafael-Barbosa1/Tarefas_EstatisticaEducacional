@@ -195,10 +195,6 @@ seq(-5, 5, 0.1) %>%
 rnorm(n = 100) %>% 
   as_tibble %>%
   ggplot(aes(x = value)) +
-  geom_histogram(aes(y = ..density..),
-                 colour = "black",
-                 fill = "white",
-                 bins = 11) +
   theme_bw() +
   stat_function(fun = funcaoq13, 
                 aes(colour = "bla"),
