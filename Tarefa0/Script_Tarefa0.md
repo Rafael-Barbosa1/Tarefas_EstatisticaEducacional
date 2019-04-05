@@ -195,10 +195,6 @@ seq(-5, 5, 0.1) %>%
 rnorm(n = 100) %>% 
   as_tibble %>%
   ggplot(aes(x = value)) +
-  geom_histogram(aes(y = ..density..),
-                 colour = "black",
-                 fill = "white",
-                 bins = 11) +
   theme_bw() +
   stat_function(fun = funcaoq13, 
                 aes(colour = "bla"),
@@ -255,39 +251,27 @@ seq(-5, 5, 0.1) %>%
 
 ``` r
 rnorm(n = 1000) %>% 
-  as_tibble %>%
+  as_tibble %>% 
+  mutate(curva1 = funcaoq15(x = value, a = 1, b = 0.5, c = 0.2, D = 1.7)) %>% 
+  mutate(curva2 = funcaoq15(x = value, a = 1, b = 1.5, c = 0.2, D = 1.7)) %>% 
+  mutate(curva3 = funcaoq15(x = value, a = 2, b = 1.5, c = 0.2, D = 1.7)) %>%
+  mutate(norm_inv = -dnorm(x = value)) %>%
   ggplot(aes(x = value)) +
-  stat_function(fun = function(x) -dnorm(x), 
-                aes(colour = "bla"),
-                size = 1.5, 
-                alpha = 0.9) +
-  stat_function(fun = funcaoq15, 
-                aes(colour = "bla1"),
-                args = list(a = 1, b = 0.5, c = 0.2, D = 1.7),
-                size = 1.5, 
-                alpha = 0.9) +
-  stat_function(fun = funcaoq15, 
-                aes(colour = "bla2"),
-                args = list(a = 1, b = 1.5, c = 0.2, D = 1.7),
-                size = 1.5, 
-                alpha = 0.9) +
-  stat_function(fun = funcaoq15, 
-                aes(colour = "bla3"),
-                args = list(a = 2, b = 1.5, c = 0.2, D = 1.7),
-                size = 1.5, 
-                alpha = 0.9) +
-  theme_bw() +
+  geom_line(aes(y = curva1, colour = "bla1")) +
+  geom_line(aes(y = curva2, colour = "bla2")) +
+  geom_line(aes(y = curva3, colour = "bla3")) +
+  geom_line(aes(y = norm_inv, colour = "bla4")) +
   scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
   scale_y_continuous(breaks = seq(-1, 1, 0.1), label = formato_real_graf) +
-  theme(legend.position = "bottom", 
+  theme_bw() +
+  theme(legend.position = "none", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
   labs(x = expression(paste("Habilidade ", "(", theta, ")")), 
        y = "Probabilidade de Resposta Correta") +
-  geom_hline(yintercept = 0) +
-  geom_vline(xintercept = 0)
+  geom_hline(yintercept = 0)
 ```
 
 ![](Script_Tarefa0_files/figure-markdown_github/funcaoq16-1.png)
