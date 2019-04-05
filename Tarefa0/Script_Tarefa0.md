@@ -17,14 +17,20 @@ if(!require(tidyverse)) {
 
     ## Loading required package: tidyverse
 
-    ## -- Attaching packages ------------------------------- tidyverse 1.2.1 --
+    ## Warning: package 'tidyverse' was built under R version 3.5.3
 
-    ## v ggplot2 3.1.0     v purrr   0.3.0
-    ## v tibble  2.0.1     v dplyr   0.7.8
-    ## v tidyr   0.8.2     v stringr 1.4.0
-    ## v readr   1.3.1     v forcats 0.3.0
+    ## -- Attaching packages --------------------------------- tidyverse 1.2.1 --
 
-    ## -- Conflicts ---------------------------------- tidyverse_conflicts() --
+    ## v ggplot2 3.0.0     v purrr   0.2.5
+    ## v tibble  1.4.2     v dplyr   0.7.7
+    ## v tidyr   0.8.1     v stringr 1.3.1
+    ## v readr   1.1.1     v forcats 0.3.0
+
+    ## Warning: package 'ggplot2' was built under R version 3.5.1
+
+    ## Warning: package 'dplyr' was built under R version 3.5.1
+
+    ## -- Conflicts ------------------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -45,6 +51,31 @@ if(!require(rmarkdown)) {
 ```
 
     ## Loading required package: rmarkdown
+
+    ## Warning: package 'rmarkdown' was built under R version 3.5.1
+
+Funções adicionais
+------------------
+
+``` r
+formato_real <- function(values, nsmall = 0) { #- Formatando o valor como moeda brasileira
+  values %>%
+    as.numeric() %>%
+    format(nsmall = nsmall, decimal.mark = ",", big.mark = ".") %>%
+    str_trim() %>%
+    str_c("R$ ", .)
+}
+
+
+
+
+formato_real_graf <- function(values, nsmall = 0) { #- Formatando o valor como moeda 
+  values %>%
+    as.numeric() %>%
+    format(nsmall = nsmall, decimal.mark = ",", big.mark = ".") %>%
+    str_trim()
+}
+```
 
 Definindo o set.seed (semente)
 ------------------------------
@@ -68,12 +99,18 @@ funcaoq11 <- function(x){
 }
 
 
-runif(n = 100, min = 0, max = 4) %>%
+seq(0, 4, 0.1) %>%
   as_tibble() %>%
   mutate(y = seq_along(map(.x = value, .f = funcaoq11))) %>% 
   ggplot() +
   geom_line(aes(x = y, y = value)) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = "Contagem", y = "Valor")
 ```
 
 ![](Script_Tarefa0_files/figure-markdown_github/funcaoq11-1.png)
@@ -93,6 +130,11 @@ rnorm(n = 100) %>%
                 args = list(mean = 0, sd = 1),
                 color = "darkred",
                 size = 0.7) +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
   labs(x = "Valor" , y = "Densidade")
 ```
 
@@ -110,13 +152,19 @@ funcaoq13 <- function(x, a, b, D){
 }
 
 
-runif(n = 100, min = 1, max = 20) %>%
+seq(-5, 5, 0.1) %>%
   map_dbl(~ funcaoq13(x = ., a = 1.5, b = 1, D = 1)) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
-  ggplot(data = .) +
+  ggplot() +
   geom_line(aes(x = cont, y = value)) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = "Contagem", y = "Valor")
 ```
 
 ![](Script_Tarefa0_files/figure-markdown_github/funcaoq131-1.png)
@@ -124,13 +172,19 @@ runif(n = 100, min = 1, max = 20) %>%
 ### Questão 1.3 :: D = 1.7
 
 ``` r
-runif(n = 100, min = 1, max = 20) %>%
+seq(-5, 5, 0.1) %>%
   map_dbl(~ funcaoq13(x = ., a = 1.5, b = 1, D = 1.7)) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
   ggplot(data = .) +
   geom_line(aes(x = cont, y = value)) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = "Contagem", y = "Valor")
 ```
 
 ![](Script_Tarefa0_files/figure-markdown_github/funcaoq132-1.png)
@@ -180,18 +234,63 @@ funcaoq15 <- function(x, a, b, c, D){
 }
 
 
-runif(n = 100, min = 0, max = 10) %>%
+seq(-5, 5, 0.1) %>%
   map_dbl(~ funcaoq15(x = ., a = 1.5, b = 1, c = 0.2, D = 1.7)) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
   ggplot(data = .) +
   geom_line(aes(x = cont, y = value)) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = "Contagem", y = "Valor")
 ```
 
 ![](Script_Tarefa0_files/figure-markdown_github/funcaoq15-1.png)
 
-### Questão 1.6 (Em progresso)
+### Questão 1.6
+
+``` r
+rnorm(n = 1000) %>% 
+  as_tibble %>%
+  ggplot(aes(x = value)) +
+  stat_function(fun = function(x) -dnorm(x), 
+                aes(colour = "bla"),
+                size = 1.5, 
+                alpha = 0.9) +
+  stat_function(fun = funcaoq15, 
+                aes(colour = "bla1"),
+                args = list(a = 1, b = 0.5, c = 0.2, D = 1.7),
+                size = 1.5, 
+                alpha = 0.9) +
+  stat_function(fun = funcaoq15, 
+                aes(colour = "bla2"),
+                args = list(a = 1, b = 1.5, c = 0.2, D = 1.7),
+                size = 1.5, 
+                alpha = 0.9) +
+  stat_function(fun = funcaoq15, 
+                aes(colour = "bla3"),
+                args = list(a = 2, b = 1.5, c = 0.2, D = 1.7),
+                size = 1.5, 
+                alpha = 0.9) +
+  theme_bw() +
+  scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
+  scale_y_continuous(breaks = seq(-1, 1, 0.1), label = formato_real_graf) +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = expression(paste("Habilidade ", "(", theta, ")")), 
+       y = "Probabilidade de Resposta Correta") +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0)
+```
+
+![](Script_Tarefa0_files/figure-markdown_github/funcaoq16-1.png)
 
 Questão 2
 ---------
@@ -206,6 +305,11 @@ runif(n = 1000, min = 0, max = 1) %>%
                  colour = "black", 
                  bins = 12) +
   theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
   labs(x = "Valor", y = "Densidade")
 ```
 
@@ -223,7 +327,7 @@ rbinom(n = 1000, size = 1, prob = 0.3) %>%
     ## # A tibble: 1 x 2
     ##   media variancia
     ##   <dbl>     <dbl>
-    ## 1 0.289     0.206
+    ## 1 0.301     0.211
 
 ### Questão 2.3
 
@@ -237,7 +341,7 @@ rbinom(n = 10, size = 1, prob = 0.5) %>%
     ## # A tibble: 1 x 2
     ##   media variancia
     ##   <dbl>     <dbl>
-    ## 1   0.7     0.233
+    ## 1   0.5     0.278
 
 ### Questão 2.4
 
@@ -251,4 +355,4 @@ rnorm(n = 1000) %>%
     ## # A tibble: 1 x 2
     ##     media variancia
     ##     <dbl>     <dbl>
-    ## 1 -0.0313     0.981
+    ## 1 -0.0342     0.916
