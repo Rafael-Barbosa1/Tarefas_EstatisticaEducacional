@@ -368,7 +368,9 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
   as_tibble %>%
   mutate(probabilidade = funcaoq15(x = value, a = 1.5, 
                                    b = 1, c = 0.2, D = 1.7)) %>% 
-  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade*100, digits = 2), nsmall = 2), "%", sep = ""))
+  mutate(prob_porc = paste(formato_real_graf(
+    values = round(x = probabilidade*100, digits = 2), 
+                      nsmall = 2), "%", sep = ""))
 ```
 
     ## # A tibble: 1,000 x 3
@@ -389,25 +391,36 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
 ### Questão 3.3
 
 ``` r
-rnorm(n = 1000, mean = 0, sd = 1) %>% 
+q33 <- 
+  rnorm(n = 1000, mean = 0, sd = 1) %>% 
   as_tibble %>%
   mutate(probabilidade = funcaoq15(x = value, 
                                    a = 1.5, b = 1, c = 0.2, 
                                    D = 1.7)) %>%
   mutate(bernoulli = rbinom(n = 1000, size = 1, prob = probabilidade))
+
+
+head(q33)
 ```
 
-    ## # A tibble: 1,000 x 3
-    ##      value probabilidade bernoulli
-    ##      <dbl>         <dbl>     <int>
-    ##  1  0.786       0.367            0
-    ##  2 -0.939       0.00707          0
-    ##  3  0.613       0.271            0
-    ##  4 -1.74        0.000921         0
-    ##  5  0.0868      0.0888           0
-    ##  6 -0.391       0.0280           0
-    ##  7 -0.954       0.00681          0
-    ##  8 -0.135       0.0524           0
-    ##  9  0.0307      0.0779           0
-    ## 10  1.35        0.710            0
-    ## # ... with 990 more rows
+    ## # A tibble: 6 x 3
+    ##     value probabilidade bernoulli
+    ##     <dbl>         <dbl>     <int>
+    ## 1  0.786       0.367            0
+    ## 2 -0.939       0.00707          0
+    ## 3  0.613       0.271            0
+    ## 4 -1.74        0.000921         0
+    ## 5  0.0868      0.0888           0
+    ## 6 -0.391       0.0280           0
+
+Para confirmar que não há somente zeros na coluna bernoulli, temos
+
+``` r
+q33 %>% 
+  summarise(media_bern = mean(bernoulli), var_bern = var(bernoulli))
+```
+
+    ## # A tibble: 1 x 2
+    ##   media_bern var_bern
+    ##        <dbl>    <dbl>
+    ## 1      0.188    0.153

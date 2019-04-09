@@ -380,7 +380,9 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
   as_tibble %>%
   mutate(probabilidade = funcaoq15(x = value, a = 1.5, 
                                    b = 1, c = 0.2, D = 1.7)) %>% 
-  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade*100, digits = 2), nsmall = 2), "%", sep = ""))
+  mutate(prob_porc = paste(formato_real_graf(
+    values = round(x = probabilidade*100, digits = 2), 
+                      nsmall = 2), "%", sep = ""))
 
 
 
@@ -391,7 +393,8 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
 
 ```{r, funcao33, echo = TRUE, warning = FALSE}
 
-rnorm(n = 1000, mean = 0, sd = 1) %>% 
+q33 <- 
+  rnorm(n = 1000, mean = 0, sd = 1) %>% 
   as_tibble %>%
   mutate(probabilidade = funcaoq15(x = value, 
                                    a = 1.5, b = 1, c = 0.2, 
@@ -399,7 +402,19 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
   mutate(bernoulli = rbinom(n = 1000, size = 1, prob = probabilidade))
 
 
+head(q33)
 
 
+```
+
+
+Para confirmar que não há somente zeros na coluna bernoulli, temos
+
+
+```{r, funcao331, echo = TRUE, warning = FALSE}
+
+q33 %>% 
+  summarise(media_bern = mean(bernoulli), var_bern = var(bernoulli))
+  
 
 ```
