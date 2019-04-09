@@ -54,6 +54,15 @@ if(!require(rmarkdown)) {
 
     ## Warning: package 'rmarkdown' was built under R version 3.5.1
 
+``` r
+if(!require(xlsx)) {
+  install.packages("xlsx", dependencies = T); 
+  require(xlsx)
+}
+```
+
+    ## Loading required package: xlsx
+
 Funções adicionais
 ------------------
 
@@ -77,7 +86,7 @@ formato_real_graf <- function(values, nsmall = 0) { #- Formatando o valor como m
 }
 ```
 
-Definindo o set.seed (semente)
+Definindo a set.seed (semente)
 ------------------------------
 
 ``` r
@@ -340,3 +349,65 @@ rnorm(n = 1000) %>%
     ##     media variancia
     ##     <dbl>     <dbl>
     ## 1 -0.0342     0.916
+
+Questão 3
+---------
+
+### Questão 3.1
+
+``` r
+rnorm(n = 1000) %>% 
+  as_tibble %>% 
+  xlsx::write.xlsx(file = "Tarefa_3.1.xlsx", sheetName = "BD")
+```
+
+### Questão 3.2
+
+``` r
+rnorm(n = 1000, mean = 0, sd = 1) %>% 
+  as_tibble %>%
+  mutate(probabilidade = funcaoq15(x = value, a = 1.5, 
+                                   b = 1, c = 0.2, D = 1.7)) %>% 
+  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade*100, digits = 2), nsmall = 2), "%", sep = ""))
+```
+
+    ## # A tibble: 1,000 x 3
+    ##     value probabilidade prob_porc
+    ##     <dbl>         <dbl> <chr>    
+    ##  1 -0.931       0.00722 0,72%    
+    ##  2 -1.08        0.00494 0,49%    
+    ##  3 -1.08        0.00489 0,49%    
+    ##  4 -0.809       0.00983 0,98%    
+    ##  5 -0.806       0.00990 0,99%    
+    ##  6 -0.239       0.0407  4,07%    
+    ##  7 -0.547       0.0190  1,90%    
+    ##  8  0.576       0.253   25,32%   
+    ##  9 -0.632       0.0153  1,53%    
+    ## 10 -1.18        0.00385 0,39%    
+    ## # ... with 990 more rows
+
+### Questão 3.3
+
+``` r
+rnorm(n = 1000, mean = 0, sd = 1) %>% 
+  as_tibble %>%
+  mutate(probabilidade = funcaoq15(x = value, 
+                                   a = 1.5, b = 1, c = 0.2, 
+                                   D = 1.7)) %>%
+  mutate(bernoulli = rbinom(n = 1000, size = 1, prob = probabilidade))
+```
+
+    ## # A tibble: 1,000 x 3
+    ##      value probabilidade bernoulli
+    ##      <dbl>         <dbl>     <int>
+    ##  1  0.786       0.367            0
+    ##  2 -0.939       0.00707          0
+    ##  3  0.613       0.271            0
+    ##  4 -1.74        0.000921         0
+    ##  5  0.0868      0.0888           0
+    ##  6 -0.391       0.0280           0
+    ##  7 -0.954       0.00681          0
+    ##  8 -0.135       0.0524           0
+    ##  9  0.0307      0.0779           0
+    ## 10  1.35        0.710            0
+    ## # ... with 990 more rows

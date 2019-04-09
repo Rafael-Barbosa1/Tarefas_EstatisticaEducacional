@@ -36,6 +36,12 @@ if(!require(rmarkdown)) {
 }
 
 
+if(!require(xlsx)) {
+  install.packages("xlsx", dependencies = T); 
+  require(xlsx)
+}
+
+
 ```
 
 ## Funções adicionais
@@ -63,7 +69,7 @@ formato_real_graf <- function(values, nsmall = 0) { #- Formatando o valor como m
 ```
 
 
-## Definindo o set.seed (semente)
+## Definindo a set.seed (semente)
 
 ```{r, seed, echo = T}
 
@@ -346,6 +352,54 @@ rnorm(n = 1000) %>%
   as_tibble %>%
   summarise(media = mean(value), 
             variancia = var(value))
+
+
+```
+
+
+## Questão 3
+
+
+### Questão 3.1
+
+```{r, funcao31, echo = TRUE, warning = FALSE}
+
+rnorm(n = 1000) %>% 
+  as_tibble %>% 
+  xlsx::write.xlsx(file = "Tarefa_3.1.xlsx", sheetName = "BD")
+
+
+```
+
+
+### Questão 3.2
+
+```{r, funcao32, echo = TRUE, warning = FALSE}
+
+rnorm(n = 1000, mean = 0, sd = 1) %>% 
+  as_tibble %>%
+  mutate(probabilidade = funcaoq15(x = value, a = 1.5, 
+                                   b = 1, c = 0.2, D = 1.7)) %>% 
+  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade*100, digits = 2), nsmall = 2), "%", sep = ""))
+
+
+
+```
+
+
+### Questão 3.3
+
+```{r, funcao33, echo = TRUE, warning = FALSE}
+
+rnorm(n = 1000, mean = 0, sd = 1) %>% 
+  as_tibble %>%
+  mutate(probabilidade = funcaoq15(x = value, 
+                                   a = 1.5, b = 1, c = 0.2, 
+                                   D = 1.7)) %>%
+  mutate(bernoulli = rbinom(n = 1000, size = 1, prob = probabilidade))
+
+
+
 
 
 ```
