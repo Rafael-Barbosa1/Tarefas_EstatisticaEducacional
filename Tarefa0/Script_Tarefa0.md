@@ -112,7 +112,7 @@ seq(0, 4, 0.1) %>%
   as_tibble() %>%
   mutate(y = seq_along(map(.x = value, .f = funcaoq11))) %>% 
   ggplot() +
-  geom_line(aes(x = y, y = value)) +
+  geom_line(aes(x = y, y = value), color = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
@@ -138,7 +138,7 @@ rnorm(n = 100) %>%
   stat_function(fun = dnorm, 
                 args = list(mean = 0, sd = 1),
                 color = "darkred",
-                size = 0.7) +
+                size = 1.2) +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
@@ -166,7 +166,7 @@ seq(-5, 5, 0.1) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
   ggplot() +
-  geom_line(aes(x = cont, y = value)) +
+  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
@@ -186,7 +186,7 @@ seq(-5, 5, 0.1) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
   ggplot(data = .) +
-  geom_line(aes(x = cont, y = value)) +
+  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
@@ -244,7 +244,7 @@ seq(-5, 5, 0.1) %>%
   as_tibble %>%
   mutate(cont = seq_along(value)) %>%
   ggplot(data = .) +
-  geom_line(aes(x = cont, y = value)) +
+  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
@@ -266,10 +266,10 @@ rnorm(n = 1000) %>%
   mutate(curva3 = funcaoq15(x = value, a = 2, b = 1.5, c = 0.2, D = 1.7)) %>%
   mutate(norm_inv = -dnorm(x = value)) %>%
   ggplot(aes(x = value)) +
-  geom_line(aes(y = curva1, colour = "bla1")) +
-  geom_line(aes(y = curva2, colour = "bla2")) +
-  geom_line(aes(y = curva3, colour = "bla3")) +
-  geom_line(aes(y = norm_inv, colour = "bla4")) +
+  geom_line(aes(y = curva1, colour = "bla1"), size = 1.2) +
+  geom_line(aes(y = curva2, colour = "bla2"), size = 1.2) +
+  geom_line(aes(y = curva3, colour = "bla3"), size = 1.2) +
+  geom_line(aes(y = norm_inv, colour = "bla4"), size = 1.2) +
   scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
   scale_y_continuous(breaks = seq(-1, 1, 0.1), label = formato_real_graf) +
   theme_bw() +
