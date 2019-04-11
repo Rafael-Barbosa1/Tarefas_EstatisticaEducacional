@@ -24,6 +24,12 @@ if(!require(tidyverse)) {
 }
 
 
+if(!require(ggpubr)) {
+  install.packages("ggpubr", dependencies = T); 
+  require(ggpubr)
+}
+
+
 if(!require(knitr)) {
   install.packages("knitr", dependencies = T); 
   require(knitr)
@@ -35,11 +41,6 @@ if(!require(rmarkdown)) {
   require(rmarkdown)
 }
 
-
-if(!require(xlsx)) {
-  install.packages("xlsx", dependencies = T); 
-  require(xlsx)
-}
 
 
 ```
@@ -93,18 +94,20 @@ funcaoq11 <- function(x){
 }
 
 
-seq(0, 4, 0.1) %>%
+seq(-5, 5, 0.1) %>%
   as_tibble() %>%
-  mutate(y = seq_along(map(.x = value, .f = funcaoq11))) %>% 
+  mutate(y = funcaoq11(x = value)) %>% 
   ggplot() +
-  geom_line(aes(x = y, y = value), color = "darkred", size = 1.2) +
+  geom_line(aes(x = value, y = y), colour = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Contagem", y = "Valor")
+  labs(x = "Sequência", y = "Valor") +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
 
 
 ```
@@ -115,31 +118,50 @@ seq(0, 4, 0.1) %>%
 
 ```{r, funcaoq12, echo = TRUE, warning = FALSE}
 
-rnorm(n = 100) %>% 
-  as_tibble %>%
-  ggplot(aes(x = value)) +
-  geom_histogram(aes(y = ..density..),
-                 colour = "black",
-                 fill = "white",
-                 bins = 11) +
+ggarrange(
+
+seq(-5, 5, 0.1) %>% 
+  as_tibble %>% 
+  mutate(dist_normal = dnorm(value)) %>% 
+  ggplot() +
+  geom_line(aes(y = dist_normal, x = value), colour = "darkred", size = 1.2) +
   theme_bw() +
-  stat_function(fun = dnorm, 
-                args = list(mean = 0, sd = 1),
-                color = "darkred",
-                size = 1.2) +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Valor" , y = "Densidade")
+  labs(x = "Sequência" , y = "Densidade") +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
+
+,
+
+
+seq(-5, 5, 0.1) %>% 
+  as_tibble %>% 
+  mutate(dist_normal1 = pnorm(value)) %>% 
+  ggplot() +
+  geom_line(aes(y = dist_normal1, x = value), colour = "darkred", size = 1.2) +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black"),
+        axis.title.x = element_text(colour = "black"),
+        axis.text = element_text(colour = "black")) +
+  labs(x = "Sequência" , y = "Probabilidade") +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
+
+
+)
 
 
 ```
 
 
 
-### Questão 1.3 :: D = 1
+### Questão 1.3
 
 ```{r, funcaoq131, echo = TRUE, warning = FALSE}
 
@@ -153,75 +175,51 @@ funcaoq13 <- function(x, a, b, D){
 
 
 seq(-5, 5, 0.1) %>%
-  map_dbl(~ funcaoq13(x = ., a = 1.5, b = 1, D = 1)) %>%
   as_tibble %>%
-  mutate(cont = seq_along(value)) %>%
+  mutate(D_1 = funcaoq13(x = value, a = 1.5, b = 1, D = 1)) %>% 
+  mutate(D_1.7 = funcaoq13(x = value, a = 1.5, b = 1, D = 1.7)) %>% 
   ggplot() +
-  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
+  geom_line(aes(x = value, y = D_1, colour = "D = 1"), size = 1.2) +
+  geom_line(aes(x = value, y = D_1.7, colour = "D = 1,7"), size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Contagem", y = "Valor")
+  labs(x = "Contagem", y = "Probabilidade de acerto") +
+  scale_colour_manual(name = "",
+                      guide = "legend", 
+                      values = c("darkred", "darkblue")) +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
 
 
 ```
-
-
-
-### Questão 1.3 :: D = 1.7
-
-```{r, funcaoq132, echo = TRUE, warning = FALSE}
-
-seq(-5, 5, 0.1) %>%
-  map_dbl(~ funcaoq13(x = ., a = 1.5, b = 1, D = 1.7)) %>%
-  as_tibble %>%
-  mutate(cont = seq_along(value)) %>%
-  ggplot(data = .) +
-  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
-  theme_bw() +
-  theme(legend.position = "bottom", 
-        legend.direction = "horizontal",
-        axis.title.y = element_text(colour = "black"),
-        axis.title.x = element_text(colour = "black"),
-        axis.text = element_text(colour = "black")) +
-  labs(x = "Contagem", y = "Valor")
-
-
-```
-
 
 
 ### Questão 1.4
 
 ```{r, funcaoq14, echo = TRUE, warning = FALSE}
 
-
-
-rnorm(n = 100) %>% 
-  as_tibble %>%
-  ggplot(aes(x = value)) +
+seq(-5, 5, 0.1) %>% 
+  as_tibble %>% 
+  mutate(dist_normal1 = pnorm(value)) %>% 
+  mutate(D_1.7 = funcaoq13(x = value, a = 1.5, b = 1, D = 1.7)) %>% 
+  ggplot() +
+  geom_line(aes(x = value, y = dist_normal1, colour = "Densidade"), size = 1.2) +
+  geom_line(aes(x = value, y = D_1.7, colour = "D = 1,7"), size = 1.2) +
   theme_bw() +
-  stat_function(fun = funcaoq13, 
-                aes(colour = "bla"),
-                args = list(a = 1.5, b = 1, D = 1.7),
-                size = 1.2, 
-                alpha = 0.9) + 
-  stat_function(fun = dnorm, 
-                aes(colour = "blabla"),
-                size = 1.2,
-                alpha = 0.9) + 
-  scale_colour_manual(name = "", values = c("darkred", "darkblue"), 
-                      breaks = c("bla", "blabla"), 
-                      labels = c("Função 1.3 \n (D = 1,7)", "Densidade \n da N(0,1)")) + 
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Valor", y = "Densidade")
+  labs(x = "Contagem", y = "Probabilidade de acerto") +
+  scale_colour_manual(name = "", values = c("darkblue", "darkred"),
+                      labels = c("Densidade \n da N(0,1)", "Função 1.3 \n (D = 1,7)")) +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
 
 
 ```
@@ -241,19 +239,20 @@ funcaoq15 <- function(x, a, b, c, D){
 
 
 seq(-5, 5, 0.1) %>%
-  map_dbl(~ funcaoq15(x = ., a = 1.5, b = 1, c = 0.2, D = 1.7)) %>%
-  as_tibble %>%
-  mutate(cont = seq_along(value)) %>%
-  ggplot(data = .) +
-  geom_line(aes(x = cont, y = value), color = "darkred", size = 1.2) +
+  as_tibble %>% 
+  mutate(q15 = funcaoq15(x = value, a = 1.5, b = 1, c = 0.2, 
+                         D = 1.7)) %>% 
+  ggplot() +
+  geom_line(aes(x = value, y = q15), color = "darkred", size = 1.2) +
   theme_bw() +
   theme(legend.position = "bottom", 
         legend.direction = "horizontal",
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Contagem", y = "Valor")
-
+  labs(x = "x", y = "Probabilidade") +
+  scale_x_continuous(labels = formato_real_graf) +
+  scale_y_continuous(labels = formato_real_graf)
 
 ```
 
@@ -265,18 +264,21 @@ seq(-5, 5, 0.1) %>%
 ```{r, funcaoq16, echo = TRUE, warning = FALSE}
 
 
-rnorm(n = 1000) %>% 
+seq(-5, 5, 0.1) %>% 
   as_tibble %>% 
-  mutate(curva1 = funcaoq15(x = value, a = 1, b = 0.5, c = 0.2, D = 1.7)) %>% 
-  mutate(curva2 = funcaoq15(x = value, a = 1, b = 1.5, c = 0.2, D = 1.7)) %>% 
-  mutate(curva3 = funcaoq15(x = value, a = 2, b = 1.5, c = 0.2, D = 1.7)) %>%
+  mutate(curva1 = funcaoq15(x = value, a = 1, b = 0.5, c = 0.2, 
+                            D = 1.7)) %>% 
+  mutate(curva2 = funcaoq15(x = value, a = 1, b = 1.5, c = 0.2, 
+                            D = 1.7)) %>% 
+  mutate(curva3 = funcaoq15(x = value, a = 2, b = 1.5, c = 0.2, 
+                            D = 1.7)) %>%
   mutate(norm_inv = -dnorm(x = value)) %>%
   ggplot(aes(x = value)) +
   geom_line(aes(y = curva1, colour = "bla1"), size = 1.2) +
   geom_line(aes(y = curva2, colour = "bla2"), size = 1.2) +
   geom_line(aes(y = curva3, colour = "bla3"), size = 1.2) +
   geom_line(aes(y = norm_inv, colour = "bla4"), size = 1.2) +
-  scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
+  scale_x_continuous(breaks = -5:5) +
   scale_y_continuous(breaks = seq(-1, 1, 0.1), label = formato_real_graf) +
   theme_bw() +
   theme(legend.position = "none", 
