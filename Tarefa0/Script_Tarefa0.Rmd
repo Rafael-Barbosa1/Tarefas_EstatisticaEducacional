@@ -1,5 +1,7 @@
 ---
-output: html_document
+output: 
+  html_document:
+    keep_md: true
 ---
 
 
@@ -8,6 +10,8 @@ output: html_document
 ```{r, limpa_banco, echo = T}
 
 rm(list = ls())
+
+
 
 ```
 
@@ -445,7 +449,6 @@ q33 %>%
   row_spec(1, color = "black", background = "#white")
 
 
-
-  
-
 ```
+
+
