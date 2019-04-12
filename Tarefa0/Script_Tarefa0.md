@@ -78,6 +78,17 @@ if(!require(rmarkdown)) {
 
     ## Warning: package 'rmarkdown' was built under R version 3.5.1
 
+``` r
+if(!require(kableExtra)) {
+  install.packages("kableExtra", dependencies = T); 
+  require(kableExtra)
+}
+```
+
+    ## Loading required package: kableExtra
+
+    ## Warning: package 'kableExtra' was built under R version 3.5.1
+
 Funções adicionais
 ------------------
 
