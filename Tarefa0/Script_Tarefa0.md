@@ -1,7 +1,7 @@
 ---
-output: 
-  html_document:
-    keep_md: true
+output:
+   html_document:
+     keep_md: TRUE
 ---
 
 
@@ -467,8 +467,8 @@ rbinom(n = 1000, size = 1, prob = 0.3) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,295 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,208 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,321 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,218 </td>
   </tr>
 </tbody>
 </table>
@@ -500,8 +500,8 @@ rbinom(n = 10, size = 1, prob = 0.5) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,600 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,267 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,800 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,178 </td>
   </tr>
 </tbody>
 </table>
@@ -533,8 +533,8 @@ rnorm(n = 1000) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,000 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,965 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0,053 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,989 </td>
   </tr>
 </tbody>
 </table>
@@ -580,34 +580,34 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.6905199 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0132447 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 1,32% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1606136 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1052284 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 10,52% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -1.4156967 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0021077 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,21% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.2712483 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0376269 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,76% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.8830468 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.4259901 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 42,60% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.6340013 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.8343400 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 83,43% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1275825 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0975574 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 9,76% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.9435532 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0069914 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,70% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.2895627 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0359718 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,60% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.2895835 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.6766542 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 67,67% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.0694152 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.5441370 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 54,41% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.6689036 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0139848 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1,40% </td>
   </tr>
 </tbody>
 </table>
