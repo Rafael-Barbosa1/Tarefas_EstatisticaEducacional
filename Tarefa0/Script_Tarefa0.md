@@ -28,30 +28,42 @@ if(!require(tidyverse)) {
 ```
 
 ```
-## Warning: package 'tidyverse' was built under R version 3.5.3
+## -- Attaching packages ------------------------------- tidyverse 1.2.1 --
 ```
 
 ```
-## -- Attaching packages --------------------------------- tidyverse 1.2.1 --
+## v ggplot2 3.1.1       v purrr   0.3.2  
+## v tibble  2.1.1       v dplyr   0.8.0.1
+## v tidyr   0.8.3       v stringr 1.4.0  
+## v readr   1.3.1       v forcats 0.4.0
 ```
 
 ```
-## v ggplot2 3.0.0     v purrr   0.2.5
-## v tibble  1.4.2     v dplyr   0.7.7
-## v tidyr   0.8.1     v stringr 1.3.1
-## v readr   1.1.1     v forcats 0.3.0
+## Warning: package 'ggplot2' was built under R version 3.5.3
 ```
 
 ```
-## Warning: package 'ggplot2' was built under R version 3.5.1
+## Warning: package 'tibble' was built under R version 3.5.3
 ```
 
 ```
-## Warning: package 'dplyr' was built under R version 3.5.1
+## Warning: package 'tidyr' was built under R version 3.5.3
 ```
 
 ```
-## -- Conflicts ------------------------------------ tidyverse_conflicts() --
+## Warning: package 'purrr' was built under R version 3.5.3
+```
+
+```
+## Warning: package 'dplyr' was built under R version 3.5.3
+```
+
+```
+## Warning: package 'forcats' was built under R version 3.5.3
+```
+
+```
+## -- Conflicts ---------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ```
@@ -68,7 +80,7 @@ if(!require(ggpubr)) {
 ```
 
 ```
-## Warning: package 'ggpubr' was built under R version 3.5.1
+## Warning: package 'ggpubr' was built under R version 3.5.3
 ```
 
 ```
@@ -103,6 +115,10 @@ if(!require(knitr)) {
 ## Loading required package: knitr
 ```
 
+```
+## Warning: package 'knitr' was built under R version 3.5.3
+```
+
 ```r
 if(!require(rmarkdown)) {
   install.packages("rmarkdown", dependencies = T); 
@@ -115,7 +131,7 @@ if(!require(rmarkdown)) {
 ```
 
 ```
-## Warning: package 'rmarkdown' was built under R version 3.5.1
+## Warning: package 'rmarkdown' was built under R version 3.5.3
 ```
 
 ```r
@@ -130,7 +146,33 @@ if(!require(kableExtra)) {
 ```
 
 ```
-## Warning: package 'kableExtra' was built under R version 3.5.1
+## Warning: package 'kableExtra' was built under R version 3.5.3
+```
+
+```
+## 
+## Attaching package: 'kableExtra'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+```
+
+```r
+if(!require(xlsx)) {
+  install.packages("xlsx", dependencies = T); 
+  require(xlsx)
+}
+```
+
+```
+## Loading required package: xlsx
+```
+
+```
+## Warning: package 'xlsx' was built under R version 3.5.3
 ```
 
 ## Funções adicionais
@@ -144,9 +186,6 @@ formato_real <- function(values, nsmall = 0) { #- Formatando o valor como moeda 
     str_trim() %>%
     str_c("R$ ", .)
 }
-
-
-
 
 formato_real_graf <- function(values, nsmall = 0) { #- Formatando o valor como moeda 
   values %>%
@@ -184,8 +223,8 @@ seq(-5, 5, 0.1) %>%
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Sequência", y = "Valor") +
-  scale_x_continuous(labels = formato_real_graf) +
+  labs(x = "Sequencia", y = "Valor") +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
 ```
 
@@ -198,7 +237,8 @@ seq(-5, 5, 0.1) %>%
 
 ```r
 ggarrange(
-
+  
+  
 seq(-5, 5, 0.1) %>% 
   as_tibble %>% 
   mutate(dist_normal = dnorm(value)) %>% 
@@ -210,9 +250,10 @@ seq(-5, 5, 0.1) %>%
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Sequência" , y = "Densidade") +
-  scale_x_continuous(labels = formato_real_graf) +
+  labs(x = "Sequencia" , y = "Densidade") +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
+
 
 ,
 
@@ -228,8 +269,8 @@ seq(-5, 5, 0.1) %>%
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Sequência" , y = "Probabilidade") +
-  scale_x_continuous(labels = formato_real_graf) +
+  labs(x = "Sequencia" , y = "Probabilidade") +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
 
 
@@ -270,7 +311,7 @@ seq(-5, 5, 0.1) %>%
   scale_colour_manual(name = "",
                       guide = "legend", 
                       values = c("darkred", "darkblue")) +
-  scale_x_continuous(labels = formato_real_graf) +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
 ```
 
@@ -297,7 +338,7 @@ seq(-5, 5, 0.1) %>%
   labs(x = "Contagem", y = "Probabilidade de acerto") +
   scale_colour_manual(name = "", values = c("darkblue", "darkred"),
                       labels = c("Densidade \n da N(0,1)", "Função 1.3 \n (D = 1,7)")) +
-  scale_x_continuous(labels = formato_real_graf) +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
 ```
 
@@ -330,7 +371,7 @@ seq(-5, 5, 0.1) %>%
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
   labs(x = "x", y = "Probabilidade") +
-  scale_x_continuous(labels = formato_real_graf) +
+  scale_x_continuous(labels = formato_real_graf, breaks = seq(-5, 5, 1)) +
   scale_y_continuous(labels = formato_real_graf)
 ```
 
@@ -392,7 +433,9 @@ runif(n = 1000, min = 0, max = 1) %>%
         axis.title.y = element_text(colour = "black"),
         axis.title.x = element_text(colour = "black"),
         axis.text = element_text(colour = "black")) +
-  labs(x = "Valor", y = "Densidade")
+  labs(x = "Valor", y = "Densidade") +
+  scale_y_continuous(label = formato_real_graf) +
+  scale_x_continuous(label = formato_real_graf)
 ```
 
 ![](Script_Tarefa0_files/figure-html/funcaoq21-1.png)<!-- -->
@@ -405,25 +448,9 @@ runif(n = 1000, min = 0, max = 1) %>%
 rbinom(n = 1000, size = 1, prob = 0.3) %>%
   as_tibble %>%
   summarise(media = mean(value), 
-            variancia = var(value))
-```
-
-```
-## # A tibble: 1 x 2
-##   media variancia
-##   <dbl>     <dbl>
-## 1 0.298     0.209
-```
-
-
-### Questão 2.3
-
-
-```r
-rbinom(n = 10, size = 1, prob = 0.5) %>%
-  as_tibble %>%
-  summarise(media = mean(value), 
             variancia = var(value)) %>% 
+  mutate_if(is.numeric, round, 3) %>% 
+  mutate_if(is.numeric, formato_real_graf, 3) %>% 
   set_colnames(c("Média", "Variância")) %>%
   kable(align = "c") %>% 
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
@@ -434,14 +461,47 @@ rbinom(n = 10, size = 1, prob = 0.5) %>%
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Média </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Variância </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Média </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Variância </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.4 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.2666667 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,295 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,208 </td>
+  </tr>
+</tbody>
+</table>
+
+
+### Questão 2.3
+
+
+```r
+rbinom(n = 10, size = 1, prob = 0.5) %>%
+  as_tibble %>%
+  summarise(media = mean(value), 
+            variancia = var(value)) %>% 
+  mutate_if(is.numeric, round, 3) %>% 
+  mutate_if(is.numeric, formato_real_graf, 3) %>%
+  set_colnames(c("Média", "Variância")) %>%
+  kable(align = "c") %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
+  row_spec(0, bold = T, color = "black", background = "white") %>% 
+  row_spec(1, color = "black", background = "white")
+```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Média </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Variância </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,600 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,267 </td>
   </tr>
 </tbody>
 </table>
@@ -455,7 +515,9 @@ rnorm(n = 1000) %>%
   as_tibble %>%
   summarise(media = mean(value), 
             variancia = var(value)) %>% 
-  set_colnames(c("Média", "Probabilidade")) %>%
+  set_colnames(c("Média", "Variância")) %>%
+  mutate_if(is.numeric, round, 3) %>% 
+  mutate_if(is.numeric, formato_real_graf, 3) %>%
   kable(align = "c") %>% 
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
   row_spec(0, bold = T, color = "black", background = "white") %>% 
@@ -465,14 +527,14 @@ rnorm(n = 1000) %>%
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Média </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Probabilidade </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Média </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Variância </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0120481 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.9838306 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,000 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,965 </td>
   </tr>
 </tbody>
 </table>
@@ -499,7 +561,7 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
   as_tibble %>%
   mutate(probabilidade = funcaoq15(x = value, a = 1.5, 
                                    b = 1, c = 0.2, D = 1.7)) %>% 
-  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade, digits = 2), nsmall = 2), "%", sep = "")) %>% 
+  mutate(prob_porc = paste(formato_real_graf(values = round(x = probabilidade*100, digits = 2), nsmall = 2), "%", sep = "")) %>% 
   head(6) %>% 
   set_colnames(c("Valor", "Probabilidade", "Probabilidade (em %)")) %>%
   kable(align = "c") %>% 
@@ -511,41 +573,41 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Valor </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Probabilidade </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Probabilidade (em %) </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Valor </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Probabilidade </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Probabilidade (em %) </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -1.1887258 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0037537 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,00% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.6905199 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0132447 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1,32% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.4311760 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.1899244 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,19% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -1.4156967 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0021077 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,21% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 2.0171783 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.9304618 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,93% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.8830468 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.4259901 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 42,60% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.2361640 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0410040 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,04% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1275825 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0975574 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 9,76% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.0467345 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0648171 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,06% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.2895627 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0359718 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,60% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 1.1779550 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.6115388 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0,61% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.0694152 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.5441370 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 54,41% </td>
   </tr>
 </tbody>
 </table>
@@ -556,8 +618,6 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
 
 ```r
 set.seed(1234)
-
-
 q33 <- 
   rnorm(n = 1000, mean = 0, sd = 1) %>% 
   as_tibble %>%
@@ -565,107 +625,85 @@ q33 <-
                                    a = 1.5, b = 1, c = 0.2, 
                                    D = 1.7)) %>%
   mutate(bernoulli = rbinom(n = 1000, size = 1, prob = probabilidade))
-
-
-
 q33 %>% 
   set_colnames(c("Valor", "Probabilidade", "Bernoulli")) %>%
-  head(10) %>% 
+  head(6) %>% 
   kable(align = "c") %>% 
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
   row_spec(0, bold = T, color = "black", background = "white") %>% 
-  row_spec(1:10, color = "black", background = "white")
+  row_spec(1:6, color = "black", background = "white")
 ```
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Valor </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Probabilidade </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Bernoulli </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Valor </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Probabilidade </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Bernoulli </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -1.2070657 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0035828 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -1.2070657 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0035828 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.2774292 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.1367493 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.2774292 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1367493 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 1.0844412 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.5536242 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.0844412 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.5536242 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -2.3456977 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0001971 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -2.3456977 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0001971 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.4291247 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.1891210 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.4291247 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.1891210 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black;background-color: white;"> 0.5060559 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.2210501 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.5747400 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0177130 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.5466319 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0190041 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.5644520 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0181752 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:center;color: black;background-color: white;"> -0.8900378 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0.0080054 </td>
-   <td style="text-align:center;color: black;background-color: white;"> 0 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.5060559 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.2210501 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0 </td>
   </tr>
 </tbody>
 </table>
 
 
-Para confirmar que não há somente zeros na coluna bernoulli, temos
+Como a distribuição bernoulli gera valores 0 e 1 aleatoriamente, caso não apareça nenhum valor 1 nas 6 primeiras linhas iremos confirmar a partir da média e da variância. Assim, temos
 
 
 
 ```r
 q33 %>% 
   summarise(media_bern = mean(bernoulli), var_bern = var(bernoulli)) %>% 
-  mutate_all(funs(formato_real_graf(round(., digits = 4), nsmall = 4))) %>%
-    set_colnames(c("Média da Bernoulli", "Variância da Bernoulli")) %>% 
+  mutate_if(is.numeric, round, 3) %>% 
+  mutate_if(is.numeric, formato_real_graf, 3) %>% 
+  set_colnames(c("Média da Bernoulli", "Variância da Bernoulli")) %>% 
   kable(align = "c") %>% 
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center") %>% 
   row_spec(0, bold = T, color = "black", background = "white") %>% 
-  row_spec(1, color = "black", background = "#white")
+  row_spec(1, color = "black", background = "white")
 ```
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Média da Bernoulli </th>
-   <th style="text-align:center;font-weight: bold;color: black;background-color: white;"> Variância da Bernoulli </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Média da Bernoulli </th>
+   <th style="text-align:center;font-weight: bold;color: black !important;background-color: white !important;"> Variância da Bernoulli </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black;background-color: #white;"> 0,2030 </td>
-   <td style="text-align:center;color: black;background-color: #white;"> 0,1620 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,203 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,162 </td>
   </tr>
 </tbody>
 </table>
