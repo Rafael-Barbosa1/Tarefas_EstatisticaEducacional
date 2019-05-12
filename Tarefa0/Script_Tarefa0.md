@@ -1,7 +1,21 @@
 ---
+title: "Tarefa 0"
+author: "Rafael Barbosa da Silva"
+date: "11/05/2019"
 output:
   html_document:
-    keep_md: TRUE
+    variant: markdown_github
+    theme: united
+    fig_caption: true 
+    keep_md: true
+    fig_width: 12
+    fig_height: 6 
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
 
 
@@ -13,7 +27,7 @@ rm(list = ls())
 ```
 
 
-## Carregando o pacote tidyverse
+## Carregando os pacotes necessários
 
 
 ```r
@@ -21,158 +35,36 @@ if(!require(tidyverse)) {
   install.packages("tidyverse", dependencies = T); 
   require(tidyverse)
 }
-```
 
-```
-## Loading required package: tidyverse
-```
 
-```
-## -- Attaching packages ------------------------------- tidyverse 1.2.1 --
-```
-
-```
-## v ggplot2 3.1.1       v purrr   0.3.2  
-## v tibble  2.1.1       v dplyr   0.8.0.1
-## v tidyr   0.8.3       v stringr 1.4.0  
-## v readr   1.3.1       v forcats 0.4.0
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.5.3
-```
-
-```
-## Warning: package 'tibble' was built under R version 3.5.3
-```
-
-```
-## Warning: package 'tidyr' was built under R version 3.5.3
-```
-
-```
-## Warning: package 'purrr' was built under R version 3.5.3
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.5.3
-```
-
-```
-## Warning: package 'forcats' was built under R version 3.5.3
-```
-
-```
-## -- Conflicts ---------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 if(!require(ggpubr)) {
   install.packages("ggpubr", dependencies = T); 
   require(ggpubr)
 }
-```
 
-```
-## Loading required package: ggpubr
-```
 
-```
-## Warning: package 'ggpubr' was built under R version 3.5.3
-```
-
-```
-## Loading required package: magrittr
-```
-
-```
-## 
-## Attaching package: 'magrittr'
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     set_names
-```
-
-```
-## The following object is masked from 'package:tidyr':
-## 
-##     extract
-```
-
-```r
 if(!require(knitr)) {
   install.packages("knitr", dependencies = T); 
   require(knitr)
 }
-```
 
-```
-## Loading required package: knitr
-```
 
-```
-## Warning: package 'knitr' was built under R version 3.5.3
-```
-
-```r
 if(!require(rmarkdown)) {
   install.packages("rmarkdown", dependencies = T); 
   require(rmarkdown)
 }
-```
 
-```
-## Loading required package: rmarkdown
-```
 
-```
-## Warning: package 'rmarkdown' was built under R version 3.5.3
-```
-
-```r
 if(!require(kableExtra)) {
   install.packages("kableExtra", dependencies = T); 
   require(kableExtra)
 }
-```
 
-```
-## Loading required package: kableExtra
-```
 
-```
-## Warning: package 'kableExtra' was built under R version 3.5.3
-```
-
-```
-## 
-## Attaching package: 'kableExtra'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     group_rows
-```
-
-```r
 if(!require(xlsx)) {
   install.packages("xlsx", dependencies = T); 
   require(xlsx)
 }
-```
-
-```
-## Loading required package: xlsx
-```
-
-```
-## Warning: package 'xlsx' was built under R version 3.5.3
 ```
 
 ## Funções adicionais
@@ -467,8 +359,8 @@ rbinom(n = 1000, size = 1, prob = 0.3) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,292 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,207 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,306 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,213 </td>
   </tr>
 </tbody>
 </table>
@@ -500,8 +392,8 @@ rbinom(n = 10, size = 1, prob = 0.5) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,300 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,233 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,600 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,267 </td>
   </tr>
 </tbody>
 </table>
@@ -533,8 +425,8 @@ rnorm(n = 1000) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0,012 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 1,028 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,008 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1,015 </td>
   </tr>
 </tbody>
 </table>
@@ -580,34 +472,34 @@ rnorm(n = 1000, mean = 0, sd = 1) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.0237661 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0684591 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 6,85% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 1.2551374 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.6571458 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 65,71% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.2734288 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0374261 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,74% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.9448327 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0069688 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,70% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -1.3490843 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0024970 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,25% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.3265630 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0328394 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,28% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.3253482 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0329379 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,29% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -2.2037515 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0002831 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,03% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.1888256 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0460227 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 4,60% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> -0.2755872 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0372283 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 3,72% </td>
   </tr>
   <tr>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> -1.4463965 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.0019493 </td>
-   <td style="text-align:center;color: black !important;background-color: white !important;"> 0,19% </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.6240136 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 0.2771255 </td>
+   <td style="text-align:center;color: black !important;background-color: white !important;"> 27,71% </td>
   </tr>
 </tbody>
 </table>
