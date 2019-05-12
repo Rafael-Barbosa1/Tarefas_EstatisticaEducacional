@@ -2,14 +2,11 @@
 title: "Tarefa 0"
 author: "Rafael Barbosa da Silva"
 date: "11/05/2019"
-output:
-  html_document:
-    variant: markdown_github
-    fig_caption: true 
-    keep_md: true
-    fig_width: 12
-    fig_height: 6 
-    highlight: tango
+always_allow_html: yes
+output: 
+  rmarkdown::github_document:
+    fig_width: 10
+    fig_height: 5
 ---
 
 
