@@ -5,17 +5,11 @@ date: "11/05/2019"
 output:
   html_document:
     variant: markdown_github
-    theme: united
     fig_caption: true 
     keep_md: true
     fig_width: 12
     fig_height: 6 
     highlight: tango
-    toc: true
-    toc_depth: 2
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
 ---
 
 
