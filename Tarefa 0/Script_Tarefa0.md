@@ -336,13 +336,13 @@ Variância
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,285
+0,264
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,204
+0,194
 
 </td>
 
@@ -396,13 +396,13 @@ Variância
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,600
+0,800
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,267
+0,178
 
 </td>
 
@@ -456,13 +456,13 @@ Variância
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,006
+0,042
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0,909
+1,006
 
 </td>
 
@@ -533,41 +533,19 @@ Probabilidade (em
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.3825773
+1.0001484
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.1715861
+0.5000946
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-17,16%
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-1.6338553
-
-</td>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-0.8342885
-
-</td>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-83,43%
+50,01%
 
 </td>
 
@@ -577,41 +555,19 @@ Probabilidade (em
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-1.1129235
+0.1315474
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.5714954
+0.0984511
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-57,15%
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-\-0.4061010
-
-</td>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-0.0269735
-
-</td>
-
-<td style="text-align:center;color: black !important;background-color: white !important;">
-
-2,70%
+9,85%
 
 </td>
 
@@ -621,19 +577,19 @@ Probabilidade (em
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.8452799
+\-0.8494107
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.4026257
+0.0088715
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-40,26%
+0,89%
 
 </td>
 
@@ -643,19 +599,63 @@ Probabilidade (em
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-\-0.0546933
+\-0.4491783
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-0.0635977
+0.0242355
 
 </td>
 
 <td style="text-align:center;color: black !important;background-color: white !important;">
 
-6,36%
+2,42%
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+0.8034362
+
+</td>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+0.3772498
+
+</td>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+37,72%
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+\-0.7495438
+
+</td>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+0.0114151
+
+</td>
+
+<td style="text-align:center;color: black !important;background-color: white !important;">
+
+1,14%
 
 </td>
 
