@@ -1,0 +1,21 @@
+Gab_codigo Lin_codigo Gab_01 Gab_02 Gab_03 Gab_04 Gab_05 Gab_06 Gab_07 Gab_08 Gab_09 Gab_10 Gab_11 Gab_12 Gab_13 Gab_14 Gab_15 Gab_16 Gab_17 Gab_18 Gab_19 Gab_20 Gab_21 Gab_22 Gab_23 Gab_24 Gab_25 Gab_26 Gab_27 Gab_28 Gab_29 Gab_30 Gab_31 Gab_32 Gab_33 Gab_34 Gab_35 Gab_36 Gab_37 Gab_38 Gab_39 Gab_40 Gab_41 Gab_42 Gab_43 Gab_44 Gab_45 Gab_46 Gab_47 Gab_48 Gab_49 Gab_50 Gab_51 Gab_52 Gab_53 Gab_54
+1 A B A D C E B B D E E C A A C D A B B A B A D D A B E E D A C X D B E C A C D B A B E C A A E B D A C D B E D
+2 E B A D C E B B D E E C A A C D A B B A B A D D A B E E D A C X D B E C A C D B A B E C A A E B D D E E C A C
+3 F B A D C E B B D E E C A A C D A B B A B A D D A B E E D A C X D B E C A C D B A B E C A A E B D E A C B D B
+4 T B A D C E B B D E E C A A C D A B B A B A D D A B E E D A C X D B E C A C D B A B E C A A E B D B E D C E A
+5 I B A D C E B B D E E C A A C D A B B A B A D D A B E E D A C X D B E C A C D B A B E C A A E B D A C B D B B
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

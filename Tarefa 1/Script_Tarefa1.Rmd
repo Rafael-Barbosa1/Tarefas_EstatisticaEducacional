@@ -1,0 +1,564 @@
+---
+title: "Tarefa 1"
+author: "Rafael Barbosa da Silva"
+date: "11/05/2019"
+always_allow_html: yes
+output: 
+  rmarkdown::github_document:
+    fig_width: 10
+    fig_height: 5
+---
+
+
+## Limpando o banco
+
+```{r, limpa_banco, echo = T}
+
+rm(list = ls())
+
+```
+
+
+## Carregando os pacotes necessários
+
+```{r, pacotes, echo = T, message = F}
+
+if(!require(tidyverse)) {
+  install.packages("tidyverse", dependencies = T); 
+  require(tidyverse)
+}
+
+
+if(!require(magrittr)) {
+  install.packages("magrittr", dependencies = T); 
+  require(magrittr)
+}
+
+
+if(!require(data.table)) {
+  install.packages("data.table", dependencies = T); 
+  require(data.table)
+}
+
+
+if(!require(tidyquant)) {
+  install.packages("tidyquant", dependencies = T); 
+  require(tidyquant)
+}
+
+
+if(!require(pander)) {
+  install.packages("pander", dependencies = T); 
+  require(pander)
+}
+
+
+```
+
+
+## Funções adicionais
+
+
+```{r, f_adicionais, echo = T}
+
+formato_real <- function(values, nsmall = 0) { #- Formatando o valor como moeda brasileira
+  values %>%
+    as.numeric() %>%
+    format(nsmall = nsmall, decimal.mark = ",", big.mark = ".") %>%
+    str_trim() %>%
+    str_c("R$ ", .)
+}
+
+formato_real_graf <- function(values, nsmall = 0) { #- Formatando o valor como moeda 
+  values %>%
+    as.numeric() %>%
+    format(nsmall = nsmall, decimal.mark = ",", big.mark = ".") %>%
+    str_trim()
+}
+
+```
+
+
+
+## Carregando as respostas e o gabarito
+
+```{r, dataset, echo = TRUE, warning = FALSE}
+
+respostas <- fread(file = "Base1.txt", header = T, fill = T, na.strings = "")
+
+
+gabarito <- fread(file = "Gab1.txt", header = T)
+
+
+```
+
+
+
+## Manipulação no banco
+
+
+```{r, manipulacao, echo = TRUE, warning = FALSE}
+
+respostas %<>%
+  filter_all(any_vars(!str_detect(., pattern = "---"))) %>%  # Desconsiderar as linhas "---"
+  filter(Lingua != "", Lingua != "(73391") %>% # Retiras as ultimas linhas: " " e "(73391 rows...)
+  mutate_all(as.factor) %>% # Colocando todas as colunas como fatores
+  mutate_all(str_replace_all, fixed("*"), NA) %>% # Mudar o que tiver de * para NA 
+  mutate_all(list(~ replace_na(., 0))) %>% # Mudar o NA para 0
+  select(-matches("^LIN")) %>% # Remove a lingua estrangeira
+  select(-c(Origem, Inst, Isento)) # Remover as colunas
+
+
+gabarito %<>%
+  select_at(vars(-ends_with("49"), -ends_with("50"), -ends_with("51"),
+                 -ends_with("52"), -ends_with("53"), -ends_with("54"))) %>%
+  select(-c(Gab_codigo, Lin_codigo)) %>%
+  set_colnames(colnames(respostas)) %>%
+  distinct
+
+
+```
+
+
+## Questão 1
+
+
+```{r, quest1, echo = TRUE, warning = FALSE}
+
+quest1 <-
+  respostas %>%
+  gather() %>%
+  group_by(key, value) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 2)) %>%
+  rename(Resposta = value, Frequencia = count, Percentual = perc) %>%
+  split(.$key)
+
+quest1 %>% 
+  pander()
+
+```
+
+
+
+## Questão 2
+
+
+```{r, quest2, echo = TRUE, warning = FALSE}
+
+banco <-
+  bind_rows(respostas, gabarito) # Coloca uma linha de gabarito abaixo
+# das respostas
+
+
+respostas_banco <-
+  banco %>%
+  mutate_all(.funs = list(~if_else(. == dplyr::last(.), 1, 0))) %>%
+  rename_all(~ paste("GAB_", ., sep = "")) %>%
+  slice(1:(n()-1)) # Retira a ultima linha do gabarito
+
+
+quest2 <-
+  respostas_banco %>%
+  gather() %>%
+  group_by(key, value) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count), digits = 2)) %>%
+  select(-count) %>%
+  set_colnames(c("Item", "Resposta", "Proporção")) %>% 
+  split(.$Item)
+
+
+quest2 %>% 
+  pander()
+
+```
+
+
+
+## Questão 3
+
+
+```{r, quest3, echo = F, fig.align = "center"}
+
+banco <- bind_cols(banco %>% slice(1:(n()-1)), # Retira a ultima linha do
+                   respostas_banco)            # gabarito
+
+
+banco %>%
+  mutate(score = rowSums(.[49:96])) %>%
+  mutate(score = score + 1) %>%
+  ggplot(data = ., aes(x = score)) +
+  geom_histogram(colour = "black", bins = 45) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  labs(x = "Score", y = "Frequência") +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal",
+        axis.title.y = element_text(colour = "black", face = "bold"),
+        axis.title.x = element_text(colour = "black", face = "bold"),
+        axis.text = element_text(colour = "black"))
+
+
+```
+ Esse gráfico não deveria ter os picos, diferentes da distribuição. Provavelmente devido ao tratamento errado aos dados em relação aos asteriscos e espaços.
+ 
+ 
+## Questão 4
+
+
+```{r, quest4, echo = F, fig.align = "center", fig.height = 14}
+
+banco %>%
+  mutate(score = rowSums(.[49:96])) %>%
+  mutate(score = score + 1) %>%
+  gather(key, value, -score) %>%
+  group_by(score, key, value) %>%
+  summarise(n = n()) %>%
+  filter(value != 0, !str_detect(string = key, "^GAB_")) %>%
+  mutate(porc = round(x = n/sum(n), digits = 3)) %>%
+  rename(Resposta = value, Frequencia = n) %>%
+  ggplot() +
+  geom_line(aes(x = score, y = porc, group = Resposta,
+                colour = Resposta)) +
+  tidyquant::theme_tq() +
+  coord_cartesian(xlim = c(0, 50))  +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  tidyquant::scale_color_tq(name = "",
+                      guide = "legend",
+                      labels = c("A", "B", "C", "D", "E")) +
+  labs(x = "Escore", y = "Proporção") +
+  facet_wrap(~ key, nrow = 8, ncol = 6)
+
+
+```
+
+
+
+## Questão 5
+
+
+```{r, quest5, echo = TRUE}
+
+
+score_menor_27 <-
+  banco %>%
+  mutate(score = rowSums(.[49:96])) %>%
+  mutate(score = score + 1) %>%
+  summarise(quantile(score, 0.27)) %>%
+  as.numeric
+
+
+score_maior_27 <-
+  banco %>%
+  mutate(score = rowSums(.[49:96])) %>%
+  mutate(score = score + 1) %>%
+  summarise(quantile(score, 0.73)) %>%
+  as.numeric
+
+
+score_menor_27 %>% 
+  pander
+
+
+score_maior_27 %>% 
+  pander
+
+```
+
+
+## Questão 6
+
+
+```{r, quest6, echo = F, fig.align = "center"}
+
+
+#--- Gráfico (POR)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "POR")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Português", y = "Frequência")
+
+
+#--- Gráfico (MAT)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "MAT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Matemática", y = "Frequência")
+
+
+#--- Gráfico (HIS)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "HIS")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "História", y = "Frequência")
+
+
+#--- Gráfico (GEO)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "MAT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Geografia", y = "Frequência")
+
+
+#--- Gráfico (FIS)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "FIS")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Física", y = "Frequência")
+
+
+#--- Gráfico (QUI)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "QUI")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Química", y = "Frequência")
+
+
+
+
+#--- Gráfico (BIO)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "BIO")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Biologia", y = "Frequência")
+
+
+
+#--- Gráfico (LIT)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "LIT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Literatura", y = "Frequência")
+
+
+```
+
