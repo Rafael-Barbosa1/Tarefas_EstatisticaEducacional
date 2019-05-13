@@ -1146,4 +1146,306 @@ score_maior_27 %>%
 
 ## Questão 6
 
-<img src="Script_Tarefa1_files/figure-gfm/quest6-1.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-2.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-3.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-4.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-5.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-6.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-7.png" style="display: block; margin: auto;" /><img src="Script_Tarefa1_files/figure-gfm/quest6-8.png" style="display: block; margin: auto;" />
+``` r
+#--- Gráfico (POR)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "POR")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Português", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-1.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (MAT)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "MAT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Matemática", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-2.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (HIS)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "HIS")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "História", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-3.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (GEO)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "MAT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Geografia", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-4.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (FIS)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "FIS")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Física", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-5.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (QUI)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "QUI")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Química", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-6.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (BIO)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "BIO")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Biologia", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-7.png" style="display: block; margin: auto;" />
+
+``` r
+#--- Gráfico (LIT)
+
+
+respostas_banco %>%
+  mutate(score = rowSums(.[1:48])) %>%
+  mutate(score = score + 1) %>%
+  mutate(nivel1 = if_else(score <= score_menor_27, "Inferior",
+                          if_else(score >= score_maior_27, "Superior",
+                                  "Intermediário"))) %>%
+  gather(key, value, -nivel1) %>%
+  group_by(nivel1, key, value) %>%
+  filter(str_detect(string = key, "LIT")) %>%
+  summarise(count = n()) %>%
+  mutate(perc = round(x = count/sum(count)*100, digits = 3)) %>%
+  rename(Resposta = value, Frequencia = count) %>%
+  filter(Resposta == 1) %>%
+  ggplot() +
+  geom_line(aes(x = nivel1, y = perc, colour = key, group = key),
+            size = 1.5) +
+  geom_point(aes(x = nivel1, y = perc, colour = key), size = 3) +
+  theme_bw() +
+  scale_y_continuous(labels = formato_real_graf) +
+  theme(legend.position = "right",
+        axis.title.y = element_text(colour = "black", face = "bold", size = 12),
+        axis.title.x = element_text(colour = "black", face = "bold", size = 12),
+        axis.text = element_text(colour = "black")) +
+  scale_colour_manual(name = "",
+                      guide = "legend",
+                      values = c("#89C5DA", "#DA5724", "#74D944", "#CE50CA",
+                                 "#3F4921", "#C0717C"),
+                      labels = c("Item 1", "Item 2", "Item 3", "Item 4",
+                                 "Item 5", "Item 6")) +
+  labs(x = "Literatura", y = "Frequência")
+```
+
+<img src="Script_Tarefa1_files/figure-gfm/quest6-8.png" style="display: block; margin: auto;" />

@@ -274,7 +274,7 @@ score_maior_27 %>%
 ## Questão 6
 
 
-```{r, quest6, echo = F, fig.align = "center"}
+```{r, quest6, echo = T, fig.align = "center"}
 
 
 #--- Gráfico (POR)
